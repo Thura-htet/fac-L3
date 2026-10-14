@@ -17,11 +17,19 @@ public class BasicAction implements Action
         this.cost = cost;
     }
 
+    // verifies if the action is applicable to state
+    // an action is applicable to state when all the preconditions
+    // are met for the state
     public boolean isApplicable(Map<Variable, Object> state)
     {
-        for (var e : this.precondition.entrySet())
+        if (state == null)
+            return false;
+
+        // for every precondition p
+        for (Map.Entry<Variable, Object> p : this.precondition.entrySet())
         {
-            if (state.containsKey(e.getKey()) && !state.get(e.getKey()).equals(e.getValue()))
+            // the state must contain p key and values must match
+            if (!state.containsKey(p.getKey()) || !state.get(p.getKey()).equals(p.getValue()))
                 return false;
         }
         return true;

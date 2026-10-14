@@ -12,15 +12,31 @@ import java.util.Set;
 
 public class DijkstraPlanner implements Planner
 {
-    private  Map<Variable, Object> init;
+    private Map<Variable, Object> init;
     private Set<Action> actions;
     private Goal goal;
 
-    public Map<Variable, Object> getInitialState() { return this.init; }
+    public DijkstraPlanner(Map<Variable, Object> init, Set<Action> actions, Goal goal)
+    {
+        this.init = init;
+        this.actions = actions;
+        this.goal = goal;
+    }
 
-    public Set<Action> getActions() { return this.actions; }
+    public Map<Variable, Object> getInitialState() 
+    {
+         return this.init; 
+    }
 
-    public Goal getGoal() { return this.goal; }
+    public Set<Action> getActions()
+    { 
+        return this.actions; 
+    }
+
+    public Goal getGoal()
+    { 
+        return this.goal; 
+    }
 
     public List<Action> plan()
     {

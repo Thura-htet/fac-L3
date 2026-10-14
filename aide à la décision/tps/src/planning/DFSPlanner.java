@@ -55,16 +55,18 @@ public class DFSPlanner implements Planner
 
         for (Action action : this.actions)
         {
+            // System.out.println(action);
             if (action.isApplicable(currentState))
             {
                 // whether or not hte action is action is applicable to state is
                 // checked internally
-                Map<Variable, Object> next = action.successor(init);
+                Map<Variable, Object> next = action.successor(currentState);
                 if (!closed.contains(next))
                 {
                     plan.add(action);
                     closed.add(next);
 
+                    // DFS is implemented using a stack which is why a call stack is useful
                     List<Action> subPlan = DFS(next, plan, closed);
                     if (subPlan != null)
                         return subPlan;

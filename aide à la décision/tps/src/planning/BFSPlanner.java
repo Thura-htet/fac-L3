@@ -17,6 +17,13 @@ public class BFSPlanner implements Planner
     private Set<Action> actions;
     private Goal goal;
 
+    public BFSPlanner(Map<Variable, Object> init, Set<Action> actions, Goal goal)
+    {
+        this.init = init;
+        this.actions = actions;
+        this.goal = goal;
+    }
+
     public Map<Variable, Object> getInitialState()
     {
         return this.init;
