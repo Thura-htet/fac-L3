@@ -1,7 +1,6 @@
 package modelling;
 
 import java.util.Set;
-import java.util.HashSet;
 import java.util.Objects;
 
 public class Variable 

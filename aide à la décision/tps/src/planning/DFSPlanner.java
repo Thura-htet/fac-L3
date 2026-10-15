@@ -3,7 +3,6 @@ package planning;
 import modelling.Variable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,8 @@ public class DFSPlanner implements Planner
     private Map<Variable, Object> init;
     private Set<Action> actions;
     private Goal goal;
+    private int clock = 0;
+    private boolean start = false;
 
     public DFSPlanner(Map<Variable, Object> init, Set<Action> actions, Goal goal)
     {
@@ -37,6 +38,16 @@ public class DFSPlanner implements Planner
         return this.goal;
     }
 
+    public int getClock()
+    {
+        return this.clock;
+    }
+
+    public void startClock()
+    {
+        this.start = true;
+    }
+
     public List<Action> plan()
     {
         List<Action> plan = new ArrayList<>();
@@ -50,6 +61,9 @@ public class DFSPlanner implements Planner
 
     public List<Action> DFS(Map<Variable, Object> currentState, List<Action> plan, Set<Map<Variable, Object>> closed)
     {
+        if (start)
+            this.clock++;
+        
         if (this.goal.isSatisfiedBy(currentState))
             return plan;
 

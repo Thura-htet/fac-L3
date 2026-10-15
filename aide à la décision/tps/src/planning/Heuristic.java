@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface Heuristic
 {
-    public Float estimate(Map<Variable, Object> state);
+    public float estimate(Map<Variable, Object> state);
 }

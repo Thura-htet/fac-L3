@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 
 public class BFSPlanner implements Planner
@@ -16,6 +14,8 @@ public class BFSPlanner implements Planner
     private Map<Variable, Object> init;
     private Set<Action> actions;
     private Goal goal;
+    private int clock = 0;
+    private boolean start = false;
 
     public BFSPlanner(Map<Variable, Object> init, Set<Action> actions, Goal goal)
     {
@@ -37,6 +37,16 @@ public class BFSPlanner implements Planner
     public Goal getGoal()
     {
         return this.goal;
+    }
+
+    public int getClock()
+    {
+        return this.clock;
+    }
+
+    public void startClock()
+    {
+        this.start = true;
     }
 
     public List<Action> plan()
@@ -67,6 +77,8 @@ public class BFSPlanner implements Planner
         {
             Map<Variable, Object> currentState = open.remove(0);
             closed.add(currentState);
+            if (start)
+                this.clock++;
 
             for (Action action : this.actions)
             {
@@ -79,7 +91,7 @@ public class BFSPlanner implements Planner
                         plan.put(next, action);
 
                         if (this.goal.isSatisfiedBy(next))
-                            return backtrack(father, plan, next);
+                            return Helper.backtrack(father, plan, next);
                         open.add(next);
                     }
                 }
@@ -87,20 +99,4 @@ public class BFSPlanner implements Planner
         }
         return null;
     }
-
-    // doesn't this assume that plan is null
-    public List<Action> backtrack(
-        Map<Map<Variable, Object>, Map<Variable, Object>> father, 
-        Map<Map<Variable, Object>, Action> plan, 
-        Map<Variable, Object> goal)
-    {
-        List<Action> res = new ArrayList<>();
-        while (father.get(goal) != null)
-        {
-            res.add(plan.get(goal));
-            goal = father.get(goal);
-        }
-        return res.reversed();
-    }
-
 }

@@ -15,4 +15,8 @@ public interface Planner
     Set<Action> getActions();
 
     Goal getGoal();
+
+    int getClock();
+
+    void startClock();
 }

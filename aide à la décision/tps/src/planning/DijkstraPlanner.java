@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 public class DijkstraPlanner implements Planner
@@ -15,6 +14,8 @@ public class DijkstraPlanner implements Planner
     private Map<Variable, Object> init;
     private Set<Action> actions;
     private Goal goal;
+    private int clock = 0;
+    private boolean start = false;
 
     public DijkstraPlanner(Map<Variable, Object> init, Set<Action> actions, Goal goal)
     {
@@ -36,6 +37,16 @@ public class DijkstraPlanner implements Planner
     public Goal getGoal()
     { 
         return this.goal; 
+    }
+
+    public int getClock()
+    {
+        return this.clock;
+    }
+
+    public void startClock()
+    {
+        this.start = true;
     }
 
     public List<Action> plan()
@@ -61,8 +72,11 @@ public class DijkstraPlanner implements Planner
     {
         while (!open.isEmpty())
         {
-            Map<Variable, Object> currentState = argmin(open, distances);
+            Map<Variable, Object> currentState = Helper.argmin(open, distances);
             open.remove(currentState);
+
+            if (start)
+                this.clock++;
 
             if (this.goal.isSatisfiedBy(currentState))
                 return getDijkstraPlan(father, plan, currentState);
@@ -89,24 +103,7 @@ public class DijkstraPlanner implements Planner
         return null;
     }
 
-    public Map<Variable, Object> argmin(Set<Map<Variable, Object>> open, Map<Map<Variable, Object>, Float> distance)
-    {
-        Map<Variable, Object> bestNode = new HashMap<>();
-        Float bestRoute = Float.MAX_VALUE;
-
-        for(Map<Variable, Object> o : open)
-        {
-            Float currentRoute = distance.get(o);
-            if (currentRoute < bestRoute)
-            {
-                bestRoute = currentRoute;
-                bestNode = o;
-            }
-        }
-        return bestNode;
-    }
-
-    public List<Action> getDijkstraPlan(
+   public List<Action> getDijkstraPlan(
         Map<Map<Variable, Object>, Map<Variable, Object>> father,
         Map<Map<Variable, Object>, Action> plan,
         Map<Variable, Object> finalDest

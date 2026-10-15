@@ -17,9 +17,6 @@ public class BasicAction implements Action
         this.cost = cost;
     }
 
-    // verifies if the action is applicable to state
-    // an action is applicable to state when all the preconditions
-    // are met for the state
     public boolean isApplicable(Map<Variable, Object> state)
     {
         if (state == null)
