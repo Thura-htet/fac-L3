@@ -22,13 +22,14 @@ public class DifferenceConstraint implements Constraint
         }};
     }
 
-    public boolean isSatisfiedBy(Map<Variable, Object> instanciation) throws IllegalArgumentException
+    public boolean isSatisfiedBy(Map<Variable, Object> instanciations) throws IllegalArgumentException
     {
-        if (instanciation.isEmpty())
-            throw new IllegalArgumentException("Empty instanciation.");
-        
-        if (var1.equals(var2))
-            return false;
-        return true;
+        for(Variable var :this.getScope())
+        {
+            if(!instanciations.containsKey(var))
+                throw new IllegalArgumentException("instance does not exist");
+        }
+        return (!instanciations.get(this.var1).equals(instanciations.get(this.var2)));
+              
     }
 }

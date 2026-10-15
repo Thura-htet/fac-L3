@@ -10,4 +10,8 @@ public interface Action
     Map<Variable, Object> successor(Map<Variable, Object> state);
 
     int getCost();
+
+    public Map<Variable, Object> getPrecondition();
+
+    public Map<Variable, Object> getEffect();
 }

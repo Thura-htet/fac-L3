@@ -22,7 +22,6 @@ public class BasicAction implements Action
         if (state == null)
             return false;
 
-        // for every precondition p
         for (Map.Entry<Variable, Object> p : this.precondition.entrySet())
         {
             // the state must contain p key and values must match
@@ -49,5 +48,15 @@ public class BasicAction implements Action
     public int getCost()
     {
         return this.cost;
+    }
+
+    public Map<Variable, Object> getPrecondition()
+    {
+        return this.precondition;
+    }
+
+    public Map<Variable, Object> getEffect()
+    {
+        return this.effect;
     }
 }
