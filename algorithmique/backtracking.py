@@ -37,7 +37,9 @@ class Clause:
             '''
             if lit not in valeurs:
                 return None
-            if self.forme_lit(lit) and valeurs[lit]:
+
+            print(f"{self.forme_lit(lit)} and {valeurs[lit]}")
+            if self.forme_lit(lit) == valeurs[lit]: # False and False is False
                 return True
         return False
 
@@ -103,7 +105,9 @@ class Formule:
         for clause in self.clauses:
             if not start:
                 res += " ∧ " 
-            res += str(clause)
+            res += f" ({str(clause)}) "
+            start = False
+
         return res
 
     def satisfiable(self):
@@ -116,9 +120,7 @@ class Formule:
         # if at any point a clause returns False the formula is not satisfiable
         # under the current ==> this is not true
         def backtrack(c=0, l=0):
-            print(f"Clause: {self.clauses[c]}")
-
-            if c == len(self.clauses): # isn't it only if it's greater than?
+            if c > len(self.clauses): # isn't it only if it's greater than?
                 return res
             clause = self.clauses[c]
             
@@ -133,10 +135,15 @@ class Formule:
             # False => assign LITTERAL to False
             if litteral not in res:
                 res[litteral] = True
+
+            print(f"Clause: {self.clauses[c]}")
+            print(f"Res: {res}")
             
             satisfiable = clause.evaluer(res)
+            print(satisfiable)
+            print()
             if satisfiable == None: # means there are still other litterals that are not initiated
-                res[litteral] = True # or continue
+                res[litteral] = True # or continue needs to be removed i think
                 backtrack(c, l+1)
             elif not satisfiable:
                 if res[litteral] != False: # it would be stuck here if it is not for this condition
@@ -149,10 +156,10 @@ class Formule:
                     return True
              
             # need to check the bounds of c and l
-
-
-
-        return backtrack()
+        satisfiable = backtrack(0, 0)
+        if satisfiable:
+            return res
+        return satisfiable
 
 
     @staticmethod
@@ -168,7 +175,6 @@ class Formule:
             for j in range(k):
                 c.ajouter_litteral("x"+str(random.randint(0,nb_vars)),bool(random.getrandbits(1)))
             f.ajouter_clause(c)
-        print(f)
         return f
 
     def simplifier(self):
