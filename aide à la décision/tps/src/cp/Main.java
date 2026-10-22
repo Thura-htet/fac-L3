@@ -21,7 +21,7 @@ public class Main
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
         ok = ok && ArcConsistencyTests.testRevise();
         ok = ok && ArcConsistencyTests.testAC1();
-        // ok = ok && MACSolverTests.testSolve();
+        ok = ok && MACSolverTests.testSolve();
         // ok = ok && HeuristicMACSolverTests.testSolve();
         // ok = ok && NbConstraintsVariableHeuristicTests.testBest();
         // ok = ok && DomainSizeVariableHeuristicTests.testBest();
