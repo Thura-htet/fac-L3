@@ -1,7 +1,7 @@
 package modelling;
 
-import java.util.Set;
 import java.util.Map;
+import java.util.Set;
 
 public interface Constraint
 {

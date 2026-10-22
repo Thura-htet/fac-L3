@@ -18,8 +18,8 @@ public class Main
         boolean ok = true;
         // ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
-        // ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
-        // ok = ok && ArcConsistencyTests.testRevise();
+        ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
+        ok = ok && ArcConsistencyTests.testRevise();
         // ok = ok && ArcConsistencyTests.testAC1();
         // ok = ok && MACSolverTests.testSolve();
         // ok = ok && HeuristicMACSolverTests.testSolve();

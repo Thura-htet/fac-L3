@@ -8,12 +8,12 @@ public class UnaryConstraint implements Constraint
 {
 
     private Variable variable;
-    private Set<Object> sub;
+    private Set<Object> values;
 
-    public UnaryConstraint(Variable v, Set<Object> s) 
+    public UnaryConstraint(Variable variable, Set<Object> values) 
     {
-        this.variable = v;
-        this.sub = s;
+        this.variable = variable;
+        this.values = values;
     }
 
     @Override
@@ -30,12 +30,22 @@ public class UnaryConstraint implements Constraint
 
         if (!instantiation.containsKey(this.variable))
             throw new IllegalArgumentException("Variable doesn't exist.");
-        return this.sub.contains(instantiation.get(this.variable));
+        return this.values.contains(instantiation.get(this.variable));
     }
 
     @Override
     public String toString()
     {
-        return "UnaryConstraint: [v=" + this.variable + ", s=" + this.sub + "]";
+        return "UnaryConstraint: [v=" + this.variable + ", s=" + this.values + "]";
+    }
+
+    public Set<Object> getValues()
+    {
+        return this.values;
+    }
+
+    public Variable getVariable()
+    {
+        return this.variable;
     }
 }

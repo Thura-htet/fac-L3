@@ -1,7 +1,7 @@
 package modelling;
 
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 public class Variable 
 {
@@ -44,5 +44,15 @@ public class Variable
     public Set<Object> getDomain()
     {
         return this.domain;
+    }
+
+    @Override
+    public String toString()
+    {
+/*         String res = this.name + ": {" + this.domain.size() + " | ";
+        for (Object o : this.domain)
+            res += (o + ", ");
+        res += "}"; */
+        return this.name;
     }
 }
