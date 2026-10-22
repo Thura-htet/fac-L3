@@ -16,7 +16,6 @@ public class ArcConsistency
 {
     private Set<Constraint> constraints;
 
-
     public ArcConsistency(Set<Constraint> constraints) throws IllegalArgumentException 
     {
         for (Constraint constraint : constraints)
@@ -121,6 +120,8 @@ public class ArcConsistency
 
     public boolean revise(Variable v1, Set<Object> d1, Variable v2, Set<Object> d2)
     {
+        if (v1.equals(v2))
+            return false;
         Set<Object> removeSet = new HashSet<>();
 /* 
         String res = "";
@@ -128,7 +129,7 @@ public class ArcConsistency
             res += (constraint + ",   ");
 
         System.out.println(res);
- */
+*/
         
         for (Object val1 : d1) // set to be removed from
         {
@@ -138,6 +139,7 @@ public class ArcConsistency
                 boolean constraintSatisfiable = true;
                 for  (Constraint constraint : this.constraints)
                 {
+                    
                     Set<Variable> scope = constraint.getScope();
 
                     // check if given variables concern the constraint
@@ -152,12 +154,6 @@ public class ArcConsistency
                     }
 
                     constraintSatisfiable = constraintSatisfiable && constraint.isSatisfiedBy(Map.of(v1, val1, v2, val2));
-
-                    /* if (!constraint.isSatisfiedBy(Map.of(v1, val1, v2, val2)))
-                    {
-                        val1Satisfiable = true; // problem here because if satisfiable is true once it is true for the rest of the variable
-                    } */
-                    // System.out.println(constraint + ": (" + v1 + ": " + val1 + ")" + "(" + v2 + ": " + val2 + ")" + " ==> " + constraint.isSatisfiedBy(Map.of(v1, val1, v2, val2))  + " | " + constraintSatisfiable);
                 }
                 val1Satisfiable = constraintSatisfiable;
                 if (val1Satisfiable)
@@ -170,5 +166,31 @@ public class ArcConsistency
         if (remove)
             d1.removeAll(removeSet);
         return remove;
+    }
+
+    public boolean ac1(Map<Variable, Set<Object>> domainMap)
+    {
+        if (!enforceNodeConsistency(domainMap))
+            return false;
+
+        boolean change;
+        do { 
+            change = false;
+            for (Variable v1 : domainMap.keySet())
+            {
+                for (Variable v2 : domainMap.keySet())
+                {
+                    if (revise(v1, domainMap.get(v1), v2, domainMap.get(v2)))
+                        change = true;
+                }
+            }
+
+        }
+        while (change);
+
+        for (Variable v : domainMap.keySet())
+            if (domainMap.get(v).isEmpty())
+                return false;
+        return true;
     }
 }

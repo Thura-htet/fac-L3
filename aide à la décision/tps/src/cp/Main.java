@@ -20,7 +20,7 @@ public class Main
         ok = ok && BacktrackSolverTests.testSolve();
         ok = ok && ArcConsistencyTests.testEnforceNodeConsistency();
         ok = ok && ArcConsistencyTests.testRevise();
-        // ok = ok && ArcConsistencyTests.testAC1();
+        ok = ok && ArcConsistencyTests.testAC1();
         // ok = ok && MACSolverTests.testSolve();
         // ok = ok && HeuristicMACSolverTests.testSolve();
         // ok = ok && NbConstraintsVariableHeuristicTests.testBest();
