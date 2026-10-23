@@ -22,10 +22,10 @@ public class Main
         ok = ok && ArcConsistencyTests.testRevise();
         ok = ok && ArcConsistencyTests.testAC1();
         ok = ok && MACSolverTests.testSolve();
-        // ok = ok && HeuristicMACSolverTests.testSolve();
-        // ok = ok && NbConstraintsVariableHeuristicTests.testBest();
-        // ok = ok && DomainSizeVariableHeuristicTests.testBest();
-        // ok = ok && RandomValueHeuristicTests.testOrdering();
+        ok = ok && HeuristicMACSolverTests.testSolve();
+        ok = ok && NbConstraintsVariableHeuristicTests.testBest();
+        ok = ok && DomainSizeVariableHeuristicTests.testBest();
+        ok = ok && RandomValueHeuristicTests.testOrdering();
         System.out.println(ok ? "All tests OK" : "At least one test KO");
     }
 }
