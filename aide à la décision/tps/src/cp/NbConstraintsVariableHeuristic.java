@@ -1,9 +1,7 @@
 package cp;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import modelling.Constraint;
 import modelling.Variable;
 
@@ -27,7 +25,6 @@ public class NbConstraintsVariableHeuristic implements VariableHeuristic
     {
         Pair<Variable, Integer> max = new Pair<>(variables.iterator().next(), Integer.MIN_VALUE);
         Pair<Variable, Integer> min = new Pair<>(variables.iterator().next(), Integer.MAX_VALUE);
-
 
         for (Variable variable : variables)
         {

@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import modelling.Constraint;
-import modelling.UnaryConstraint;
 import modelling.Variable;
 
 
@@ -48,7 +46,7 @@ public class ArcConsistency
         }
         return true;
     }
- */
+*/
     public boolean enforceNodeConsistency(Map<Variable, Set<Object>> domainMap)
     {
         Map<Variable, Set<Object>> removeMap = new HashMap<>();

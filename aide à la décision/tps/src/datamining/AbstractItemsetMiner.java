@@ -11,7 +11,7 @@ public abstract class AbstractItemsetMiner implements ItemsetMiner
 {
     public static final Comparator<BooleanVariable> COMPARATOR =
         (var1, var2) -> var1.getName().compareTo(var2.getName());
-    private BooleanDatabase db;
+    protected BooleanDatabase db;
 
 
     public AbstractItemsetMiner(BooleanDatabase db)
@@ -27,6 +27,10 @@ public abstract class AbstractItemsetMiner implements ItemsetMiner
 
     public float frequency(Set<BooleanVariable> items)
     {
-        return 0;
+        float count = 0;
+        for (Set<BooleanVariable> transaction : this.db.getTransactions())
+            if (transaction.containsAll(items))
+                count++;
+        return count;
     }
 }
