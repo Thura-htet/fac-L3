@@ -31,6 +31,6 @@ public abstract class AbstractItemsetMiner implements ItemsetMiner
         for (Set<BooleanVariable> transaction : this.db.getTransactions())
             if (transaction.containsAll(items))
                 count++;
-        return count;
+        return count / this.db.getTransactions().size();
     }
 }

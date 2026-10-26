@@ -16,12 +16,12 @@ public class Itemset
         this.frequency = frequency;
     }
 
-    Set<BooleanVariable> getItems()
+    public Set<BooleanVariable> getItems()
     {
         return this.items;
     }
     
-    float getFrequency()
+    public float getFrequency()
     {
         return this.frequency;
     }

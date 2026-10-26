@@ -22,14 +22,11 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
 
     public static float frequency(Set<BooleanVariable> items, Set<Itemset> itemSets) throws IllegalArgumentException
     {
-        float frequency = 0;
         for (Itemset itemSet : itemSets)
             if (itemSet.getItems().equals(items))
-                frequency++;
+                return itemSet.getFrequency();
 
-        if (frequency == 0)
-            throw new IllegalArgumentException("Given set of items is not in the set of Itemsets.");
-        return frequency;
+        throw new IllegalArgumentException("Given set of items is not in the set of Itemsets.");
     }
     
     public static float confidence(Set<BooleanVariable> premise, Set<BooleanVariable> conclusion, Set<Itemset> itemSet)

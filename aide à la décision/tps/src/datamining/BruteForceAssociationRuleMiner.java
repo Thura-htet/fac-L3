@@ -15,7 +15,7 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
     public static Set<Set<BooleanVariable>> allCandidatePremises(Set<BooleanVariable> items)
     {
         Set<Set<BooleanVariable>> res = new HashSet<Set<BooleanVariable>>();
-        if (items.isEmpty())
+        if (items.size() <= 1)
             return res;
         
         BooleanVariable pick = items.iterator().next();
@@ -23,6 +23,7 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
 
         Set<BooleanVariable> rest = new HashSet<>(items);
         rest.remove(pick);
+        res.add(rest);
         Set<Set<BooleanVariable>> subsets = allCandidatePremises(rest);
         res.addAll(subsets);
 
@@ -48,19 +49,19 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
 
         for (Itemset itemSet : frequenItemsets)
         {
-            Set<BooleanVariable> union = itemSet.getItems();
+            Set<BooleanVariable> union = new HashSet<>(itemSet.getItems());
             Set<Set<BooleanVariable>> premiseSet 
                 = BruteForceAssociationRuleMiner.allCandidatePremises(union);
 
             for (Set<BooleanVariable> premise : premiseSet)
             {
-                Set<BooleanVariable> conclusion = itemSet.getItems();
+                Set<BooleanVariable> conclusion = new HashSet<>(itemSet.getItems());
                 conclusion.removeAll(premise);
 
                 float frequency = AbstractAssociationRuleMiner.frequency(union, frequenItemsets);
                 float confidence = AbstractAssociationRuleMiner.confidence(premise, conclusion, frequenItemsets);
 
-                if ((frequency > minFrequency) && (confidence > minConfidence))
+                if ((frequency >= minFrequency) && (confidence >= minConfidence))
                     res.add(new AssociationRule(premise, conclusion, frequency, confidence));
             }
         }

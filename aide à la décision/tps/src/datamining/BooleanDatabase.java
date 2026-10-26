@@ -1,5 +1,6 @@
 package datamining;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import modelling.BooleanVariable;
 public class BooleanDatabase
 {
     private Set<BooleanVariable> items;
-    private List<Set<BooleanVariable>> transactions;
+    private List<Set<BooleanVariable>> transactions = new ArrayList<Set<BooleanVariable>>();
 
 
     public BooleanDatabase(Set<BooleanVariable> items)
